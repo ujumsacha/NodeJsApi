@@ -52,7 +52,7 @@ async delete (req ,res)
 },
 async create (req ,res)
 {
-  if (!req.body.name || !req.body.description || !req.body.price ) {
+  if (!req.body.name || !req.body.description || !req.body.price ||req.body.inStock==null ) {
     res.status(400).send({
       message: "Veuillez renseigner tous les champs SVP!"
     });
@@ -79,7 +79,14 @@ async create (req ,res)
 
 async update (req ,res)
 {
+  if (!req.body.name || !req.body.description || !req.body.price ||req.body.inStock==null ) {
+    res.status(400).send({
+      message: "Veuillez renseigner tous les champs SVP!"
+    });
+    return;
+  }
 
+  
   const monid = req.params.id;
   try{
     await ProductTable.update(req.body,{where:{id:monid}})
